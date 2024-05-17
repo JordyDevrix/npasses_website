@@ -9,12 +9,12 @@ export class NpassService {
 
   constructor(private http: HttpClient) { }
 
-  generatePass(): Observable<any> {
+  generatePass(email: String, name: String): Observable<any> {
     const url = 'https://npass-api-j2ffjjapia-ez.a.run.app/pass';
     const data = {
-      email: '2109jordy2241@gmail.com',
-      name: 'JordyDevrix',
-      exp: 5
+      email: email,
+      name: name,
+      exp: 240
     };
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

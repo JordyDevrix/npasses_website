@@ -21,19 +21,6 @@ export class AppComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private npassService: NpassService, private http: HttpClient) { }
 
-  generatePass() {
-    this.npassService.generatePass().subscribe(
-      response => {
-        console.log('Pass generated successfully:', response);
-        // Handle the response here
-      },
-      error => {
-        console.error('Error generating pass:', error);
-        // Handle errors here
-      }
-    );
-  }
-
   ngOnInit() {
     this.joinForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(20), Validators.minLength(1)]],
@@ -57,7 +44,12 @@ export class AppComponent implements OnInit {
       this.joinForm.get('email')?.setErrors(null);
       this.joinForm.reset();
     }, 1000);
-    this.generatePass();
+    this.npassService.generatePass(
+      this.joinForm.value.email,
+      this.joinForm.value.name
+    ).subscribe((data) => {
+      console.log(data);
+    } );
   }
 
   onCheck() {
